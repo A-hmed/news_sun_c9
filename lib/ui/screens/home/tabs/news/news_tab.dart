@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:news_sun_c9/data/api/api_manager.dart';
 import 'package:news_sun_c9/data/model/sources_response.dart';
+import 'package:news_sun_c9/ui/screens/home/tabs/news/news_list/news_list.dart';
 
 class NewsTab extends StatefulWidget {
+  final String categoryId;
+  NewsTab(this.categoryId);
   @override
   State<NewsTab> createState() => _NewsTabState();
 }
@@ -13,8 +16,9 @@ class _NewsTabState extends State<NewsTab> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: ApiManager.getSources(),
+        future: ApiManager.getSources(widget.categoryId),
         builder: (context, snapshot) {
+         // snapshot.connectionState == ConnectionState.waiting
           if (snapshot.hasData) {
             return buildTabs(snapshot.data!);
           } else if (snapshot.hasError) {
@@ -47,9 +51,7 @@ class _NewsTabState extends State<NewsTab> {
           Expanded(
             child: TabBarView(
                 children: list
-                    .map((source) => Container(
-                          color: Colors.red,
-                        ))
+                    .map((source) => NewsList(sourceId: source.id!))
                     .toList()),
           )
         ],
