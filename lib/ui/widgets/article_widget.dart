@@ -9,7 +9,7 @@ class ArticleWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(12),
+      margin: const EdgeInsets.all(12),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -17,19 +17,20 @@ class ArticleWidget extends StatelessWidget {
             borderRadius: BorderRadius.circular(22),
             child: CachedNetworkImage(
               imageUrl: article.urlToImage!,
-              placeholder: (_, __) => Center(child: CircularProgressIndicator()),
-              errorWidget: (_, __,___) => Icon(Icons.error),
+              placeholder: (_, __) => const Center(child: CircularProgressIndicator()),
+              errorWidget: (_, __,___) => const Icon(Icons.error),
               fit: BoxFit.fill,
               height: MediaQuery.of(context).size.height * .25,),
           ),
-          SizedBox(height: 4,),
+          const SizedBox(height: 4,),
           Text(article.source?.name??"" ),
-          SizedBox(height: 4,),
+          const SizedBox(height: 4,),
           Text(article.title??""),
-          SizedBox(height: 4,),
+          const SizedBox(height: 4,),
           Text(article.publishedAt??"", textAlign: TextAlign.end,)
         ],
       ),
     );
   }
 }
+

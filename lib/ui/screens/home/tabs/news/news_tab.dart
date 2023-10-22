@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:news_sun_c9/data/api/api_manager.dart';
 import 'package:news_sun_c9/data/model/sources_response.dart';
 import 'package:news_sun_c9/ui/screens/home/tabs/news/news_list/news_list.dart';
+import 'package:news_sun_c9/ui/screens/home/tabs/news/news_tab_view_model.dart';
+import 'package:news_sun_c9/ui/widgets/error_view.dart';
+import 'package:news_sun_c9/ui/widgets/loading_widget.dart';
+import 'package:provider/provider.dart';
 
 class NewsTab extends StatefulWidget {
   final String categoryId;
@@ -12,21 +16,39 @@ class NewsTab extends StatefulWidget {
 
 class _NewsTabState extends State<NewsTab> {
   int currentTabIndex = 0;
+  NewsTabViewModel viewModel = NewsTabViewModel();
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      viewModel.getSources(widget.categoryId);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: ApiManager.getSources(widget.categoryId),
-        builder: (context, snapshot) {
-         // snapshot.connectionState == ConnectionState.waiting
-          if (snapshot.hasData) {
-            return buildTabs(snapshot.data!);
-          } else if (snapshot.hasError) {
-            return Text(snapshot.error.toString());
-          } else {
-            return const Center(child: CircularProgressIndicator());
-          }
-        });
+
+    return ChangeNotifierProvider(
+        create: (_) {
+          print("Creating provider");
+          return viewModel;
+        },
+        child: Consumer<NewsTabViewModel>(
+          builder: (context, viewModel, _){
+            Widget currentView;
+            if(viewModel.isLoading){
+              currentView = LoadingWidget();
+            }
+            else if(viewModel.sources.isNotEmpty){
+              currentView = buildTabs(viewModel.sources);
+            }else {
+              currentView = ErrorView(message: viewModel.errorText??"");
+            }
+            return currentView;
+          },
+        ),
+    );
   }
 
   Widget buildTabs(List<Source> list) {
