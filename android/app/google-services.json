@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "87171845149",
+    "project_id": "news-online-9ca5a",
+    "storage_bucket": "news-online-9ca5a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:87171845149:android:54366309cdc77cc893caf4",
+        "android_client_info": {
+          "package_name": "com.example.news_sun_c9"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAODqDbYVFPWF7QBxFwcYEbldx3Xc6uWYA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

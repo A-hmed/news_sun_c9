@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:news_sun_c9/data/api/api_manager.dart';
+import 'package:news_sun_c9/data/repos/news_repo/data_sources/online_data_source.dart';
 import 'package:news_sun_c9/data/model/sources_response.dart';
 import 'package:news_sun_c9/ui/screens/home/tabs/news/news_list/news_list.dart';
 import 'package:news_sun_c9/ui/screens/home/tabs/news/news_tab_view_model.dart';

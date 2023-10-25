@@ -1,10 +1,17 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:news_sun_c9/data/api/api_manager.dart';
+import 'package:news_sun_c9/data/repos/news_repo/data_sources/online_data_source.dart';
 import 'package:news_sun_c9/ui/screens/home/home_screen.dart';
 import 'package:news_sun_c9/ui/screens/home/tabs/news/news_tab_view_model.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  FirebaseFirestore.instance.settings =
+      const Settings(cacheSizeBytes: Settings.CACHE_SIZE_UNLIMITED);
+  await FirebaseFirestore.instance.disableNetwork();
   runApp(const MyApp());
 }
 

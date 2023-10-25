@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:news_sun_c9/data/api/api_manager.dart';
+import 'package:news_sun_c9/data/repos/news_repo/data_sources/online_data_source.dart';
 import 'package:news_sun_c9/data/model/articles_response.dart';
 import 'package:news_sun_c9/ui/widgets/article_widget.dart';
 import 'package:news_sun_c9/ui/widgets/error_view.dart';
@@ -12,7 +12,7 @@ class NewsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<Article>>(
-        future: ApiManager.getArticles(sourceId),
+        future: OnlineDataSource().getArticles(sourceId),
         builder: (context, snapshot){
            if(snapshot.hasData){
              return buildArticlesListView(snapshot.data!);

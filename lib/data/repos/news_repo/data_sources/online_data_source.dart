@@ -4,13 +4,13 @@ import 'package:http/http.dart';
 import 'package:news_sun_c9/data/model/articles_response.dart';
 import 'package:news_sun_c9/data/model/sources_response.dart';
 
-abstract class ApiManager {
+class OnlineDataSource {
   static const String baseUrl = "newsapi.org";
   static const String apiKey = "a2803275cc264f5ab82151862011361a";
   static const String sourcesEndPoint = "/v2/top-headlines/sources";
   static const String articlesEndPoint = "/v2/everything";
 
-  static Future<List<Source>> getSources(String category) async {
+   Future<SourcesResponse> getSources(String category) async {
     Uri url = Uri.parse("https://$baseUrl$sourcesEndPoint?apiKey=$apiKey&category=$category");
     Response response = await get(url);
     Map json = jsonDecode(response.body);
@@ -20,12 +20,12 @@ abstract class ApiManager {
     if (response.statusCode >= 200 &&
         response.statusCode < 300 &&
         sourcesResponse.sources?.isNotEmpty == true) {
-      return sourcesResponse.sources!;
+      return sourcesResponse;
     }
     throw Exception(sourcesResponse.message);
   }
 
-  static Future<List<Article>> getArticles(String sourceId) async {
+   Future<List<Article>> getArticles(String sourceId) async {
     Uri url = Uri.https(
         baseUrl, articlesEndPoint, {"apiKey": apiKey, "sources": sourceId});
     var serverResponse = await get(url);
